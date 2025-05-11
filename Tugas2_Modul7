@@ -1,0 +1,39 @@
+class Node<T> {
+  T? nodeValue;
+  Node<T>? next;
+
+  Node();
+  Node.withValue(T item) {
+    nodeValue = item;
+    next = null;
+  }
+}
+
+class SingleLinkedList<T> {
+  Node<T>? head;
+
+  // Nomor 2: Fungsi buatLinkedList1
+  void buatLinkedList1(Node<T> p, Node<T> q) {
+    p.next = q;  // Menghubungkan node p ke node q
+    head = p;    // Menjadikan p sebagai head dari list
+  }
+
+  void printList() {
+    Node<T>? current = head;
+    while (current != null) {
+      print(current.nodeValue);
+      current = current.next;
+    }
+  }
+}
+
+void main() {
+  var node1 = Node.withValue("red");
+  var node2 = Node.withValue("green");
+
+  var list = SingleLinkedList<String>();
+  list.buatLinkedList1(node1, node2);
+
+  print("Isi Linked List setelah buatLinkedList1:");
+  list.printList(); // Output: red, green
+}
