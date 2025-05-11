@@ -1,0 +1,182 @@
+// Implementasi Doubly Linked List nomor 8 dengan Dart
+
+// Class untuk node
+class DNode<T> {
+  T data;
+  DNode<T>? next;
+  DNode<T>? prev;
+
+  DNode(this.data);
+
+  @override
+  String toString() {
+    return data.toString();
+  }
+}
+
+// Class untuk Double Linked List
+class DoubleLinkedList<T> {
+  DNode<T>? head;
+  DNode<T>? tail;
+
+  // Constructor
+  DoubleLinkedList();
+
+  // Method untuk menambahkan node di depan
+  void tambahNodeDepan(DNode<T> newNode) {
+    if (head == null) {
+      head = newNode;
+      tail = newNode;
+    } else {
+      newNode.next = head;
+      head!.prev = newNode;
+      head = newNode;
+    }
+  }
+
+  // Method untuk menambahkan node di akhir
+  void tambahNodeAkhir(DNode<T> newNode) {
+    if (head == null) {
+      head = newNode;
+      tail = newNode;
+    } else {
+      tail!.next = newNode;
+      newNode.prev = tail;
+      tail = newNode;
+    }
+  }
+
+  // Method untuk menghapus node di depan
+  void hapusNodeDepan() {
+    if (head == null) return;
+    
+    if (head == tail) {
+      head = null;
+      tail = null;
+    } else {
+      head = head!.next;
+      head!.prev = null;
+    }
+  }
+
+  // Method untuk menghapus node di akhir
+  void hapusNodeAkhir() {
+    if (head == null) return;
+    
+    if (head == tail) {
+      head = null;
+      tail = null;
+    } else {
+      tail = tail!.prev;
+      tail!.next = null;
+    }
+  }
+
+  // Method untuk menghapus node tertentu (pembacaan maju)
+  void hapusNode(DNode<T> target) {
+    DNode<T>? current = head;
+    
+    while (current != null) {
+      if (current.data == target.data) {
+        if (current == head && current == tail) {
+          head = null;
+          tail = null;
+        } else if (current == head) {
+          head = head!.next;
+          head!.prev = null;
+        } else if (current == tail) {
+          tail = tail!.prev;
+          tail!.next = null;
+        } else {
+          current.prev!.next = current.next;
+          current.next!.prev = current.prev;
+        }
+        return;
+      }
+      current = current.next;
+    }
+  }
+
+  // IMPLEMENTASI NOMOR 8
+  // Method untuk menghapus node tertentu dengan pembacaan mundur
+  void hapusNodeBacaMundur(DNode<T> target) {
+    DNode<T>? current = tail;
+    
+    while (current != null) {
+      if (current.data == target.data) {
+        if (current == head && current == tail) {
+          head = null;
+          tail = null;
+        } else if (current == head) {
+          head = head!.next;
+          head!.prev = null;
+        } else if (current == tail) {
+          tail = tail!.prev;
+          tail!.next = null;
+        } else {
+          current.prev!.next = current.next;
+          current.next!.prev = current.prev;
+        }
+        return;
+      }
+      current = current.prev;
+    }
+  }
+
+  // Method untuk mengonversi list ke string
+  @override
+  String toString() {
+    if (head == null) return "Double Linked List Kosong";
+    
+    StringBuffer result = StringBuffer();
+    DNode<T>? current = head;
+    
+    result.write("[");
+    
+    while (current != null) {
+      result.write(current.data);
+      
+      if (current.next != null) {
+        result.write(", ");
+      }
+      
+      current = current.next;
+    }
+    
+    result.write("]");
+    return result.toString();
+  }
+}
+
+// Demo class untuk nomor 8
+class DoubleLinkedListDemo2 {
+  static void main() {
+    DoubleLinkedList<String> DList = DoubleLinkedList<String>();
+    print(DList.toString());
+    DList.tambahNodeAkhir(DNode<String>("ungu"));
+    print("Tambah Node di Akhir[List Kosong]: " + DList.toString());
+    DList.tambahNodeDepan(DNode<String>("merah"));
+    print("Tambah Node di Depan: " + DList.toString());
+    DList.tambahNodeDepan(DNode<String>("ungu"));
+    print("Tambah Node di Depan: " + DList.toString());
+    DList.tambahNodeAkhir(DNode<String>("kuning"));
+    print("Tambah Node di Akhir: " + DList.toString());
+    
+    DList.hapusNodeDepan();
+    print("Hapus Node di Depan: " + DList.toString());
+    DList.hapusNodeAkhir();
+    print("Hapus Node di Akhir: " + DList.toString());
+    
+    DList.hapusNode(DNode<String>("oranye"));
+    print("Hapus Node sesuai target (Target di awal list): " + 
+        DList.toString());
+    DList.hapusNode(DNode<String>("pink"));
+    print("Hapus Node sesuai target (Target di akhir list): " + 
+        DList.toString());
+  }
+}
+
+void main() {
+  print("=== DEMO UNTUK NOMOR 8 ===");
+  DoubleLinkedListDemo2.main();
+}
